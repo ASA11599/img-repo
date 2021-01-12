@@ -1,3 +1,3 @@
-# img-search
+# img-repo
 
 An image repository
