@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  web-server:
+    build: ./www
+    depends_on:
+      - api-server
+    ports:
+      - "80:80"
+  api-server:
+    build: ./api
