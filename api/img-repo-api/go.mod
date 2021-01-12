@@ -1,4 +1,4 @@
-module img-search-api
+module img-repo-api
 
 go 1.14
 

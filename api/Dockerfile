@@ -1,8 +1,8 @@
 FROM golang:1.14
 
-WORKDIR /go/src/api
+WORKDIR /go/src/img-repo-api
 
-COPY ./img-search-api .
+COPY ./img-repo-api .
 
 RUN go get
 RUN go build main.go
