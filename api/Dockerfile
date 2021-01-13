@@ -1,5 +1,7 @@
 FROM golang:1.14
 
+RUN mkdir /images
+
 WORKDIR /go/src/img-repo-api
 
 COPY ./img-repo-api .
