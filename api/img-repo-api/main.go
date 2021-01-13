@@ -160,11 +160,28 @@ func postImage(c *fiber.Ctx) error {
 	}
 }
 
+func deleteImage(c *fiber.Ctx) error {
+	imageName := c.Params("name")
+	imagePath := filepath.Join(IMG_PATH, imageName)
+	md, err := getImageMetadata(imagePath)
+	if err != nil {
+		return err
+	} else {
+		err := os.Remove(imagePath)
+		if err != nil {
+			return err
+		} else {
+			return c.JSON(md)
+		}
+	}
+}
+
 func main() {
 	
 	app := fiber.New()
 	app.Static("/images", "/images")
 	app.Get("/images/metadata", getImages)
 	app.Post("/images", postImage)
+	app.Delete("/images/:name", deleteImage)
 	log.Fatal(app.Listen("0.0.0.0:80"))
 }
