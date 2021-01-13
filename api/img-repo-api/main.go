@@ -30,47 +30,60 @@ type ImageMetadata struct {
 }
 
 func (this *ImageMetadata) matchesQuery(minw, maxw, minh, maxh, mins, maxs, f string) bool {
-	res := false
 	if minw != "" {
 		minwInt, err := strconv.Atoi(minw)
 		if err == nil {
-			res = this.Width >= minwInt
+			if !(this.Width >= minwInt) {
+				return false
+			}
 		}
 	}
 	if maxw != "" {
 		maxwInt, err := strconv.Atoi(maxw)
 		if err == nil {
-			res = this.Width <= maxwInt
+			if !(this.Width <= maxwInt) {
+				return false
+			}
 		}
 	}
 	if minh != "" {
 		minhInt, err := strconv.Atoi(minh)
 		if err == nil {
-			res = this.Height >= minhInt
+			if !(this.Height >= minhInt) {
+				return false
+			}
 		}
 	}
 	if maxh != "" {
 		maxhInt, err := strconv.Atoi(maxh)
 		if err == nil {
-			res = this.Height <= maxhInt
+			if !(this.Height <= maxhInt) {
+				return false
+			}
 		}
 	}
 	if mins != "" {
 		minsInt, err := strconv.Atoi(mins)
 		if err == nil {
-			res = this.Height >= minsInt
+			if !(int(this.Size) >= minsInt) {
+				return false
+			}
 		}
 	}
 	if maxs != "" {
 		maxsInt, err := strconv.Atoi(maxs)
 		if err == nil {
-			res = this.Height <= maxsInt
+			if !(int(this.Size) <= maxsInt) {
+				return false
+			}
 		}
 	}
 	if f != "" {
-		res = f == this.Format
+		if f != this.Format {
+			return false
+		}
 	}
-	return res
+	return true
 }
 
 func getImageFormat(img []byte) (string, error) {
