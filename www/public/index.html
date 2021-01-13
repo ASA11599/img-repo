@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>img-search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script defer src="/main.js"></script>
 </head>
 <body>
     <h1>Welcome to img-search</h1>
+    <p>This is a simple image repository that lets you upload images, delete them, and search for them based on their characteristics</p>
+    <h2>Post</h2>
+    <p>Choose an image to upload to the server</p>
+    <input type="file" accept="image/png, image/jpeg" name="image" id="imageInput"><br>
+    <button id="postImageBtn">Post image</button>
+    <br>
+    <h2>Search for images</h2>
+    minimum width: <input id="minw" type="text"><br>
+    maximum width: <input id="maxw" type="text"><br>
+    minimum height: <input id="minh" type="text"><br>
+    maximum height: <input id="maxh" type="text"><br>
+    minimum size: <input id="mins" type="text"><br>
+    maximum size: <input id="maxs" type="text"><br>
+    format: (png or jpg): <input id="f" type="text"><br>
+    <button id="searchImagesBtn">Search for images</button><br>
+    <br>
+    <p id="res"></p>
 </body>
 </html>
