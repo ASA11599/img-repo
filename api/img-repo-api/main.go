@@ -29,60 +29,21 @@ type ImageMetadata struct {
 	Name string
 }
 
-func (this *ImageMetadata) matchesQuery(minw, maxw, minh, maxh, mins, maxs, f string) bool {
-	if minw != "" {
-		minwInt, err := strconv.Atoi(minw)
-		if err == nil {
-			if !(this.Width >= minwInt) {
-				return false
-			}
-		}
-	}
-	if maxw != "" {
-		maxwInt, err := strconv.Atoi(maxw)
-		if err == nil {
-			if !(this.Width <= maxwInt) {
-				return false
-			}
-		}
-	}
-	if minh != "" {
-		minhInt, err := strconv.Atoi(minh)
-		if err == nil {
-			if !(this.Height >= minhInt) {
-				return false
-			}
-		}
-	}
-	if maxh != "" {
-		maxhInt, err := strconv.Atoi(maxh)
-		if err == nil {
-			if !(this.Height <= maxhInt) {
-				return false
-			}
-		}
-	}
-	if mins != "" {
-		minsInt, err := strconv.Atoi(mins)
-		if err == nil {
-			if !(int(this.Size) >= minsInt) {
-				return false
-			}
-		}
-	}
-	if maxs != "" {
-		maxsInt, err := strconv.Atoi(maxs)
-		if err == nil {
-			if !(int(this.Size) <= maxsInt) {
-				return false
-			}
-		}
-	}
-	if f != "" {
-		if f != this.Format {
-			return false
-		}
-	}
+func (this *ImageMetadata) matchesQuery(q [7]string) bool {
+	minw, validMinw := strconv.Atoi(q[0])
+	maxw, validMaxw := strconv.Atoi(q[1])
+	minh, validMinh := strconv.Atoi(q[2])
+	maxh, validMaxh := strconv.Atoi(q[3])
+	mins, validMins := strconv.Atoi(q[4])
+	maxs, validMaxs := strconv.Atoi(q[5])
+	f := q[6]
+	if (validMinw == nil) && (this.Width < minw) {return false}
+	if (validMaxw == nil) && (this.Width > maxw) {return false}
+	if (validMinh == nil) && (this.Height < minh) {return false}
+	if (validMaxh == nil) && (this.Height > maxh) {return false}
+	if (validMins == nil) && (this.Size < int64(mins)) {return false}
+	if (validMaxs == nil) && (this.Size > int64(maxs)) {return false}
+	if (f != "") && (f != this.Format) {return false}
 	return true
 }
 
@@ -136,7 +97,7 @@ func getImages(c *fiber.Ctx) error {
 			if err != nil {
 				return err
 			} else {
-				if md.matchesQuery(minWidth, maxWidth, minHeight, maxHeight, minSize, maxSize, format) {
+				if md.matchesQuery([7]string{minWidth, maxWidth, minHeight, maxHeight, minSize, maxSize, format}) {
 					res = append(res, md)
 				}
 			}
@@ -190,7 +151,6 @@ func deleteImage(c *fiber.Ctx) error {
 }
 
 func main() {
-	
 	app := fiber.New()
 	app.Static("/images", "/images")
 	app.Get("/images/metadata", getImages)
