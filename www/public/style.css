@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 2em;
+}
+
+img {
+    margin: 1em;
+    max-width: 25%;
+    height: auto;
+}
+
+input[type=text], input[type=number] {
+  width: 25%;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  border: 0.1em solid black;
+  border-radius: 5em;
+  box-sizing: border-box;
+  outline: none;
+}
+
+h1, h2, p {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.error {
+    color: red;
+}
+
+button {
+    font-size: 1em;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    background-color: blue;
+    border: none;
+    padding: 0.40em;
+    border-radius: 1em;
+}
+
+input[type="file"] {
+    cursor: pointer;
+    font-size: 1em;
+    color: black;
+}

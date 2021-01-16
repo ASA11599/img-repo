@@ -4,27 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>img-search</title>
-    <script defer src="/main.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="./main.js"></script>
 </head>
 <body>
-    <h1>Welcome to img-search</h1>
+    <h1>Welcome to img-repo</h1>
     <p>This is a simple image repository that lets you upload images, delete them, and search for them based on their characteristics</p>
+    <br>
     <h2>Post</h2>
     <p>Choose an image to upload to the server</p>
-    <input type="file" accept="image/png, image/jpeg" name="image" id="imageInput"><br>
+    <input type="file" accept="image/png, image/jpeg" id="imageInput">
+    <br>
+    <br>
     <button id="postImageBtn">Post image</button>
     <p id="postMsg"></p>
     <br>
     <h2>Search for images</h2>
-    minimum width: <input id="minw" type="text"><br>
-    maximum width: <input id="maxw" type="text"><br>
-    minimum height: <input id="minh" type="text"><br>
-    maximum height: <input id="maxh" type="text"><br>
-    minimum size: <input id="mins" type="text"><br>
-    maximum size: <input id="maxs" type="text"><br>
-    format: (png or jpg): <input id="f" type="text"><br>
-    <button id="searchImagesBtn">Search for images</button><br>
+    <form>
+        <label for="minw">minimum width (pixels)</label><br>
+        <input id="minw" type="number"><br>
+        <label for="maxw">maximum width (pixels)</label><br>
+        <input id="maxw" type="number"><br>
+        <label for="minh">minimum height (pixels)</label><br>
+        <input id="minh" type="number"><br>
+        <label for="maxh">maximum height (pixels)</label><br>
+        <input id="maxh" type="number"><br>
+        <label for="mins">minimum size (bytes)</label><br>
+        <input id="mins" type="number"><br>
+        <label for="maxs">maximum size (bytes)</label><br>
+        <input id="maxs" type="number"><br>
+        <label for="f">format (png or jpeg)</label><br>
+        <input id="f" type="text"><br>
+    </form>
     <br>
-    <p id="res"></p>
+    <button id="searchImagesBtn">Search for images</button><br>
+    <p id="resMsg"></p>
+    <br>
+    <div id="res">
+    </div>
 </body>
 </html>
