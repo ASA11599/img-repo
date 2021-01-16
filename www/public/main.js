@@ -3,6 +3,7 @@ const searchBtn = document.getElementById("searchImagesBtn");
 
 const resultSection = document.getElementById("res");
 const postMsg = document.getElementById("postMsg");
+const resMsg = document.getElementById("resMsg");
 
 const imageInput = document.getElementById("imageInput");
 
@@ -19,21 +20,12 @@ function renderImages(metadata) {
         const imgElement = document.createElement("img");
         const imgSRC = "/api/images/" + value["Name"] + "." + value["Format"];
         imgElement.setAttribute("src", imgSRC);
-        let w = value["Width"];
-        let h = value["Height"];
-        while ((w > 200) && (h > 200)) {
-            w = 0.9 * w;
-            h = 0.9 * h;
-        }
-        imgElement.setAttribute("width", w);
-        imgElement.setAttribute("height", h);
         const deleteBtnElement = document.createElement("button");
         deleteBtnElement.innerText = "Delete";
         deleteBtnElement.onclick = () => {
             fetch(imgSRC, {
                 method: "DELETE",
             }).then(data => data.json()).then(result => {
-                console.log(result);
                 searchBtn.onclick()
             });
         };
@@ -48,16 +40,22 @@ function renderImages(metadata) {
 }
 
 postBtn.onclick = () => {
+    postMsg.removeAttribute("class");
     postMsg.innerText = "Adding image...";
     fetch("/api/images", {
         method: "POST",
         body: imageInput["files"][0]
     }).then((result) => {
         if (result.status === 200) {
+            postMsg.removeAttribute("class");
             postMsg.innerText = "Image added";
         } else {
+            postMsg.setAttribute("class", "error");
             postMsg.innerText = "Unable to add image";
         }
+    }).catch((_) => {
+        postMsg.setAttribute("class", "error");
+        postMsg.innerText = "Unable to add image";
     });
 };
 
@@ -69,7 +67,18 @@ searchBtn.onclick = () => {
         url += value + "=" + val;
         if (index < (queryParams.length - 1)) url += "&";
     });
-    fetch(url).then(data => data.json()).then((result) => {
-        renderImages(result)
-    })
+    fetch(url).then(result => {
+        if (result.ok) return result.json();
+        else {
+            resMsg.setAttribute("class", "error");
+            resMsg.innerText = "Unable to find images";
+        }
+    }).then((data) => {
+        resMsg.removeAttribute("class");
+        resMsg.innerText = "";
+        renderImages(data);
+    }).catch((_) => {
+        resMsg.setAttribute("class", "error");
+        resMsg.innerText = "Unable to find images";
+    });
 };
